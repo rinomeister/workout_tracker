@@ -1,0 +1,64 @@
+DEPENDENCIES KOJE KORISTIMO
+vue 3 - js framework za pisanje frontenda
+uid - plugin za kreiranje unique id i povezsivanje
+tailwind - css
+supabase - backend i database
+
+TAILWIND CONFIG DODACI
+font smko stavili na poppins
+colors - dodali neke koje cemo koristit
+flex - klase
+container - stavili center na true i namistili custom breakpointe
+
+FILEOVI 
+za svaki file koji je file ima setup koji nam kaze sta triba napravit
+
+
+SETUP SUPABASEA
+loginamo se sa github accountuamo
+kreiramo novi projekt
+prvo instaliramo dependencie npm install @supabase
+saveamo environment varijable u .env file
+odemo u pproject api i kopiramo api key i spremimo ih u .env file
+kreiramo supabase.js file u nasem slucaju to je init
+kreiramo varijable koje cemo korsitit za referiranje na anonkey i projectuirl
+odemo u database i kreiramo tablicu
+SLIKA U FOLDERU 
+
+SIDEBAR
+
+DEFINIRANJE AUTENTIKACIJE PREKO SUPABASEA
+u index jos od routera kreirat dvi rute jednu za login i jednu za register (CONST ROUTES)
+spojit navigaciju s tim rutama (to: na sidebarlinkovima)
+
+POSTAVLJANJE REGISTER I LOGIN KOMPONENTI
+primamo user inpute i datu koju spremamo i saljemo supabase da kreira account
+ref ga cini reaktivnim
+kreiramo varijable koje cemo spremat input od strane usera
+
+kreiramo register funkciju
+
+
+SPREMANJE USERA U STATE
+to koristimo da bi prepoznali koji je user trenutno logiran
+importamo reactive da bi nas state bia reaktivan
+APP.VUE SETUP METTODA
+kreiramo varijablu appready koja ce sprjecit app od renderanja
+useru dajemo vrijednost usera koji je logiran a ako nije setiramo app ready na false
+zovemo set user i setiramo mu session iz dokumentacije i readyamo app
+
+LOGOUT FUNCKIJU KREIRAMO
+
+RENDERIRANJE RUTA OVISNO O LOGINU
+kreiramo comuted varijablu user i u nju spreammo user varijablue koja ce imat varijable
+vrijednost iz store.stat.euser
+samo v-if user true ili false
+
+CREATE KOMPONENTI
+impoprtamo ref za reaktinvost
+kreiramo varijable za spreamnje date
+returnamo da bi mogli koristit u templateu
+
+radimo sa status i error poruci koji ce se kreirat samo ako se dogodi poruka
+
+kreiramo formu z akreiranje vjezbi

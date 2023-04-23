@@ -1,0 +1,18 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+
+body{
+    background-color: #15253F;
+    color: white;
+}
+
+.sidebar.collapsed{
+    width: 50px;
+}
+.sidebar.collapsed a span {
+    display: none;
+}
