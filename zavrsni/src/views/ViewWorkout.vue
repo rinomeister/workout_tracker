@@ -135,7 +135,7 @@ import store from '../store';
 export default {
   name: "view-workout",
   setup() {
-    // Create data / vars
+    // Create data / vars to be used
     const data = ref(null);
     const dataLoaded = ref(null);
     const errorMsg = ref(null);
