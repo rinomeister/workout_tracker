@@ -13,7 +13,7 @@
           <div class="h-7 w-7 rounded-full flex justify-center items-center cursor-pointer bg-at-light-green shadow-lg" @click="editMode">
             <img class="h-3.5 w-auto" src="@/assets/images/pencil-light.png">
           </div>
-          <div class="h-7 w-7 rounded-full flex justify-center items-center cursor-pointer bg-at-light-green shadow-lg" @click="editMode">
+          <div class="h-7 w-7 rounded-full flex justify-center items-center cursor-pointer bg-at-light-green shadow-lg" @click="deleteWorkout" >
             <img class="h-3.5 w-auto" src="@/assets/images/trash-light.png">
           </div>
         </div>
@@ -54,26 +54,26 @@
             <label for="reps" class="mb-1  text-sm text-at-light-green">
               Reps
             </label>
-            <input v-if="edit" id="reps" v-model="item.sets" class="p-2 w-full text-gray-500 focus:outline-none" type="text"/>
+            <input v-if="edit" id="reps" v-model="item.reps" class="p-2 w-full text-gray-500 focus:outline-none" type="text"/>
             <p v-else>{{item.reps}}</p>
           </div>
           <div class="flex flex-1 flex-col">
             <label for="weight" class="mb-1  text-sm text-at-light-green">
               Weight (KG)
             </label>
-            <input v-if="edit" id="weight" v-model="item.sets" class="p-2 w-full text-gray-500 focus:outline-none" type="text"/>
+            <input v-if="edit" id="weight" v-model="item.weight" class="p-2 w-full text-gray-500 focus:outline-none" type="text"/>
             <p v-else>{{item.weight}}</p>
           </div>
           <div class="flex flex-1 flex-col">
             <label for="rpe" class="mb-1  text-sm text-at-light-green">
               RPE
             </label>
-            <input v-if="edit" id="rpe" v-model="item.sets" class="p-2 w-full text-gray-500 focus:outline-none" type="text"/>
+            <input v-if="edit" id="rpe" v-model="item.rpe" class="p-2 w-full text-gray-500 focus:outline-none" type="text"/>
             <p v-else>{{item.rpe}}</p>
           </div>
-          <img v-if="edit" class="absolute h-4 w-auto -left-5 cursor-pointer" src="@/assets/images/trash-light-green.png" alt=""/> <!-- todo doradit za admina a jelecanin -->
+          <img v-if="edit" @click="deleteExercise(item.id)" class="absolute h-4 w-auto -left-5 cursor-pointer" src="@/assets/images/trash-light-green.png" alt=""/> <!-- todo doradit za admina a jelecanin -->
         </div>
-        <button type="button" v-if="edit" class="mt-6 py-2 px-6 rounded-sm self-start text-sm text-white bg-at-light-green duration-200 border-solid border-2
+        <button type="button" v-if="edit" @click="addExercise" class="mt-6 py-2 px-6 rounded-sm self-start text-sm text-white bg-at-light-green duration-200 border-solid border-2
       border-transparent hover:border-at-light-green hover:bg-white hover:text-at-light-green">Add Exercise </button>
       </div>
 
@@ -112,15 +112,15 @@
             <input v-if="edit" id="pace" v-model="item.pace" class="p-2 w-full text-gray-500 focus:outline-none" type="text"/>
             <p v-else>{{item.pace}}</p>
           </div>
-          <img v-if="edit" class="absolute h-4 w-auto -left-5 cursor-pointer" src="@/assets/images/trash-light-green.png" alt=""/> <!-- todo doradit za admina a jelecanin -->
+          <img v-if="edit" @click="deleteExercise(item.id)" class="absolute h-4 w-auto -left-5 cursor-pointer" src="@/assets/images/trash-light-green.png" alt=""/> <!-- todo doradit za admina a jelecanin -->
         </div>
-        <button type="button" v-if="edit" class="mt-6 py-2 px-6 rounded-sm self-start text-sm text-white bg-at-light-green duration-200 border-solid border-2
+        <button type="button" @click="addExercise" v-if="edit" class="mt-6 py-2 px-6 rounded-sm self-start text-sm text-white bg-at-light-green duration-200 border-solid border-2
       border-transparent hover:border-at-light-green hover:bg-white hover:text-at-light-green">Add Exercise </button>
       </div>
       </div>
 
       <!-- Update -->
-      <button v-if="edit" type="submit" class="mt-10 py-2 px-6 rounded-sm self-start text-sm text-white bg-at-light-green duration-200 border-solid border-2
+      <button v-if="edit" @click="update" type="button" class="mt-10 py-2 px-6 rounded-sm self-start text-sm text-white bg-at-light-green duration-200 border-solid border-2
       border-transparent hover:border-at-light-green hover:bg-white hover:text-at-light-green">Update Workout</button>
     </div>
   </div>
@@ -129,8 +129,9 @@
 <script>
 import {supabase} from '../supabase/init'
 import {ref, computed} from 'vue'
-import {useRoute} from 'vue-router';
+import {useRoute, useRouter} from 'vue-router';
 import store from '../store';
+import {uid} from 'uid'
 
 export default {
   name: "view-workout",
@@ -141,6 +142,7 @@ export default {
     const errorMsg = ref(null);
     const statusMsg = ref(null);
     const route = useRoute();
+    const router = useRouter();
     const user = computed(()=>store.state.user);
     // Get current Id of route
     const currentId = route.params.workoutId;
@@ -153,6 +155,7 @@ export default {
         data.value = workouts[0];
         dataLoaded.value = true;
         console.log(data.value);
+        console.log("userData",user)
       } catch (error) {
         errorMsg.value = error.message
         setTimeout(() => {errorMsg.value = false;}, 5000)
@@ -161,7 +164,19 @@ export default {
     getData();
 
     // Delete workout
-
+    const deleteWorkout = async () =>{
+      try{
+        const {error} = await supabase.from('workouts').delete().eq('id', currentId);
+        if (error) throw error;
+        router.push({name: 'Home'})
+      }
+      catch(error){
+        errorMsg.value =  `Error: ${error.message}`;
+        setTimeout(() => {
+          errorMsg.value = false
+        }, 5000)
+      }
+    };
     // Edit mode
     const edit = ref(null);
 
@@ -170,12 +185,62 @@ export default {
 
     }
     // Add exercise
+    const addExercise = () => {
+      if (data.value.workoutType === 'strength'){
+        data.value.exercises.push({
+          id:uid(),
+          exercise:"",
+          sets:"",
+          reps:"",
+          weight:"",
+          rpe:""
+        });
+        return
+      }
+      data.value.exercises.push({
+        id:uid(),
+        cardioType:"",
+        distance:"",
+        duration:"",
+        pace:""
+      })
+    }
 
     // Delete exercise
+     const deleteExercise = (id) => {
+      if (data.value.exercises.length > 1){
+        data.value.exercises = data.value.exercises.filter((exercise) => exercise.id !== id)
+        return ;
+      }
+      errorMsg.value = "Error: cannot remove,needs to have atleast 2 exercises"
+      setTimeout(()=> {
+        errorMsg.value = false
+      },5000)
+    }
 
     // Update Workout
+    const update = async () => {
+      try {
+        const {error} = await supabase.from('workouts').update({
+          workoutName: data.value.workoutName,
+          exercises: data.value.exercises
+        }).eq('id', currentId);
+        if(error) throw error;
+        edit.value = false;
+        statusMsg.value = "Succes: workout updated"
+        setTimeout (() => {
+          statusMsg.value = false
+        },5000)
+      }
+      catch(error){
+        errorMsg.value =  `Error: ${error.message}`;
+        setTimeout(() => {
+          errorMsg.value = false
+        }, 5000)
+      }
+    }
 
-    return {statusMsg, data, dataLoaded, errorMsg,edit, editMode, user};
+    return {statusMsg, data, dataLoaded, errorMsg,edit, editMode, user,deleteWorkout,addExercise,deleteExercise,update};
   },
 };
 </script>

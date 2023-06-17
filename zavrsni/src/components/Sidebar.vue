@@ -17,7 +17,8 @@
         <SidebarLink v-if="user" class="gap-x-5 cursor-pointer" to="/image" icon="fas fa-image">Images</SidebarLink>
         <SidebarLink v-if="!user" class="gap-x-5 cursor-pointer" :to="{name:'Login'}" icon="fas fa-sign-in">Login</SidebarLink>
         <SidebarLink v-if="!user" class="gap-x-5 cursor-pointer" :to="{name:'Register'}" icon="fas fa-user-plus">Register</SidebarLink>
-        <li v-if="user" @click="logout" class="cursor-pointer">logout</li>
+        <SidebarLink v-if="user" @click="logout" class="gap-x-5 cursor-pointer" :to="{name:'Login'}" icon="fas fa-right-from-bracket">Logout</SidebarLink>
+        <!-- <li v-if="user" @click="logout" class="cursor-pointer">logout</li> -->
     <span class="collapse-icon" id="sidebar-collapser" @click="toggleSidebarino" :class="{ 'rotate-180': collapsed}"><!-- IKONA ZA KOLLAPS -->
         <i class="fa-solid fa-angles-left"></i>
     </span>
