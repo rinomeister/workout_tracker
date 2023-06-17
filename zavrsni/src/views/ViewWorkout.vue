@@ -150,7 +150,7 @@ export default {
     // Get workout data
     const getData = async () => {
       try {
-        const { data: workouts, error } = await supabase.from("workouts").select("*").eq('id', currentId);
+        const { data: workouts, error } = await supabase.from("workouts").select("*").eq('id', currentId); //restruct supabase
         if (error) throw error;
         data.value = workouts[0];
         dataLoaded.value = true;
