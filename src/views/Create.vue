@@ -97,6 +97,7 @@ import {ref} from 'vue'
 import {uid} from 'uid'
 import {supabase} from '../supabase/init'
 
+
 export default {
   name: "create",
   setup() {
@@ -106,6 +107,7 @@ export default {
     const exercises = ref([1]);
     const statusMsg = ref(null);
     const errorMsg = ref(null);
+    const user = supabase.auth.user();
 
     // Add exercise
     const addExercise = () => {
@@ -116,7 +118,8 @@ export default {
           sets:"",
           reps:"",
           weight:"",
-          rpe:""
+          rpe:"",
+          createdBy: user.email
         });
         return
       }
@@ -125,7 +128,8 @@ export default {
         cardioType:"",
         distance:"",
         duration:"",
-        pace:""
+        pace:"",
+        createdBy: user.email
       })
     }
     // Delete exercise

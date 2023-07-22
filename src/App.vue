@@ -1,19 +1,20 @@
 <template>
-  <div v-if="appReady" :style="{ 'margin-left': sidebarWidth}">
-    <Sidebar />
+  <div class="min-h-full font-Poppins box-border">
+    <Navigation />
     <router-view />
   </div>
 </template>
 
 <script>
-import Sidebar from './components/Sidebar.vue';
 import { sidebarWidth} from './components/stateSidebar'
 import {ref} from 'vue';
 import {supabase} from './supabase/init'
 import store from './store/index'
+import Navigation from './components/Navigation.vue'
+
 export default {
   components:{
-    Sidebar,
+    Navigation
   },
   setup() {
     // Create data / vars
