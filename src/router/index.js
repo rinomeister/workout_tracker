@@ -4,6 +4,7 @@ import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import Create from "../views/Create.vue"
 import ViewWorkout from "../views/ViewWorkout.vue"
+import Stopwatch from "../views/Stopwatch.vue"
 import {supabase} from "../supabase/init";
 
 const routes = [
@@ -40,6 +41,15 @@ const routes = [
     component: Create,
     meta: {
       title: "Create",
+      auth: true,
+    }
+  },
+  {
+    path: "/stopwatch",
+    name: "Stopwatch",
+    component: Stopwatch,
+    meta: {
+      title: "Stopwatch",
       auth: true,
     }
   },
