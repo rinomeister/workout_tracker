@@ -44,7 +44,7 @@
               <input required type="text" class="p-2 w-full text-gray-500 focus:outline-none" v-model="item.reps">
           </div>
           <div class="flex flex-col flex-1">
-              <label for="weight" class="mb-1 text-sm text-at-light-green">Weight in KG</label>
+              <label for="weight" class="mb-1 text-sm text-at-light-green">Weight</label>
               <input required type="text" class="p-2 w-full text-gray-500 focus:outline-none" v-model="item.weight">
           </div>
           <div class="flex flex-col flex-1">
