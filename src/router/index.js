@@ -5,6 +5,7 @@ import Register from "../views/Register.vue";
 import Create from "../views/Create.vue"
 import ViewWorkout from "../views/ViewWorkout.vue"
 import Stopwatch from "../views/Stopwatch.vue"
+import WeightTracker from "../views/WeightTracker.vue"
 import {supabase} from "../supabase/init";
 
 const routes = [
@@ -60,6 +61,15 @@ const routes = [
     meta: {
       title: "View Workout",
       auth: false,
+    }
+  },
+  {
+    path: "/weighttracker",
+    name: "Weight Tracker",
+    component: WeightTracker,
+    meta: {
+      title: "Weight Tracker",
+      auth: true,
     }
   }
 ];
