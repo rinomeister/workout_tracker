@@ -18,7 +18,7 @@
           >⌚Stopwatch</router-link
         >
         <router-link v-if="user" class="cursor-pointer" :to="{ name: 'Weight Tracker' }"
-          >🏋️‍♀️Weight Tracker</router-link
+          >👀Weight Tracker</router-link
         >
         <li v-if="user" @click="logout" class="cursor-pointer">🚪Logout</li>
       </ul>
