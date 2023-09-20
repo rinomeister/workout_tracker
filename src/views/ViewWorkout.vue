@@ -59,7 +59,7 @@
           </div>
           <div class="flex flex-1 flex-col">
             <label for="weight" class="mb-1  text-sm text-at-light-green">
-              Weight (KG)
+              Weight
             </label>
             <input v-if="edit" id="weight" v-model="item.weight" class="p-2 w-full text-gray-500 focus:outline-none" type="text"/>
             <p v-else>{{item.weight}}</p>

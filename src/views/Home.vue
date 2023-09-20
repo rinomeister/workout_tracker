@@ -10,7 +10,7 @@
     </div>
 
     <!-- Data -->
-    <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div v-if="user!=null" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       <router-link
         class="flex flex-col items-center bg-light-grey p-8 shadow-md cursor-pointer"
          :to="{ name: 'View-Workout', params: { workoutId: workout.id } }"
@@ -57,6 +57,7 @@ export default {
     // Create data / vars
     const data = ref([]);
     const dataLoaded = ref(null);
+    const user = supabase.auth.user();
     // Get data
     const getData = async () => {
       try {
@@ -70,7 +71,7 @@ export default {
     };
     // Run data function
     getData();
-    return { data, dataLoaded };
+    return { data, dataLoaded ,user};
   },
 };
 </script>

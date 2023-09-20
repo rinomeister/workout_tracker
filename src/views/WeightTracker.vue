@@ -4,7 +4,7 @@
     <div class="mb-4">
       <label for="weight" class="block mb-1 ">Enter Weight:</label>
       <input v-model="weight" type="number" id="weight"
-             class="px-3 py-2 border rounded-md focus:ring focus:ring-blue-300 " />
+             class="px-3 py-2 border rounded-md focus:ring focus:ring-blue-300 text-black" />
     </div>
     <button @click="addWeightEntry" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">Add Weight Entry</button>
     <h3 class="text-lg font-semibold mt-4 ">Weight History</h3>
